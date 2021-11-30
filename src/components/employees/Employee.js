@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useHistory } from "react-router-dom"
 import EmployeeRepository from "../../repositories/EmployeeRepository";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
+import { request } from "../../repositories/Fetch";
 
 
-export default ({ employee }) => {
+export default ({ employee, renderFunc }) => {
     const [animalCount, setCount] = useState(0)
     const [location, markLocation] = useState({ name: "" })
     const [classes, defineClasses] = useState("card employee")
     const { employeeId } = useParams()
     const { getCurrentUser } = useSimpleAuth()
     const { resolveResource, resource } = useResourceResolver()
+    const history = useHistory()
 
     useEffect(() => {
         if (employeeId) {
@@ -27,8 +29,16 @@ export default ({ employee }) => {
             markLocation(resource.employeeLocations[0])
         }
     }, [resource])
-
     
+    const fireEmployee = (id) => {
+        
+        EmployeeRepository.delete(id)
+            .then(
+                renderFunc()
+                )
+
+        
+    }
 
     return (
         <article className={classes}>
@@ -62,7 +72,10 @@ export default ({ employee }) => {
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {}}>Fire</button>
+                    <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
+                       fireEmployee(resource.id)
+
+                    }}>Fire</button>
                 }
 
             </section>
