@@ -28,6 +28,8 @@ export default ({ employee }) => {
         }
     }, [resource])
 
+    
+
     return (
         <article className={classes}>
             <section className="card-body">
