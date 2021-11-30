@@ -5,6 +5,7 @@ import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
+import { request } from "../../repositories/Fetch";
 
 
 export default ({ employee }) => {
@@ -62,7 +63,10 @@ export default ({ employee }) => {
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {}}>Fire</button>
+                    <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
+                        const userId = parseInt(resource.id)
+                        request.delete(`http://localhost:8088/users/${userId}`)
+                    }}>Fire</button>
                 }
 
             </section>
