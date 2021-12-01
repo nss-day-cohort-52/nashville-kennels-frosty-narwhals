@@ -6,6 +6,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
 import { request } from "../../repositories/Fetch";
+import LocationRepository from "../../repositories/LocationRepository";
 
 
 export default ({ employee, renderFunc }) => {
@@ -39,6 +40,15 @@ export default ({ employee, renderFunc }) => {
 
         
     }
+    useEffect(()=>{
+        LocationRepository.getAll()
+        .then(locationOBJ => markLocation(locationOBJ))
+        
+    }, []
+    
+    )
+
+   // useEffect(()=>  )
 
     return (
         <article className={classes}>
@@ -61,11 +71,15 @@ export default ({ employee, renderFunc }) => {
                 {
                     employeeId
                         ? <>
-                            <section>
-                                Caring for 0 animals
+                          <section>
+                                Caring for {resource?.animals?.length} animals
                             </section>
                             <section>
-                                Working at unknown location
+
+                                Working at {resource?.locations?.map((empLocations) => {
+                                    
+                                    return empLocations.location.name
+                                })} location
                             </section>
                         </>
                         : ""
