@@ -39,6 +39,13 @@ export default ({ employee, renderFunc }) => {
 
         
     }
+    useEffect(()=>{
+        EmployeeRepository.getAll()
+        .then(locationOBJ => markLocation(locationOBJ))
+        
+    }, []
+    
+    )
 
     return (
         <article className={classes}>
@@ -62,7 +69,7 @@ export default ({ employee, renderFunc }) => {
                     employeeId
                         ? <>
                             <section>
-                                Caring for 0 animals
+                                Caring for `{}` animals
                             </section>
                             <section>
                                 Working at unknown location
