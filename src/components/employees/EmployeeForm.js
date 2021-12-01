@@ -1,34 +1,47 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import EmployeeRepository from "../../repositories/EmployeeRepository";
+import LocationRepository from "../../repositories/LocationRepository";
 import "./EmployeeForm.css"
 
 
 export default (props) => {
-    const [employee, updateEmployee] = useState()
+    const [employees, updateEmployees] = useState([])
     const [locations, defineLocations] = useState([])
+    const [empLocation, setEmpLocation] = useState({
+        userId: 0,
+        locationId: 0
+    })
 
-    const constructNewEmployee = () => {
-        if (employee.locationId === 0) {
-            window.alert("Please select a location")
-        } else {
-            EmployeeRepository.addEmployee({
-                name: employee.name,
-                employee: true
+    useEffect(() => {
+        EmployeeRepository.getAll()
+            .then(
+                (em) => {
+                    updateEmployees(em)
+                }
+            )
+        LocationRepository.getAll()
+            .then((loc) => {
+                defineLocations(loc)
             })
-            .then(employee => {
-                EmployeeRepository.assignEmployee({
-                    employeeId: employee.id,
-                    locationId: employee.location
-                })
-            })
-            .then(() => props.history.push("/employees"))
-        }
+    }, [])
+
+    const constructNewEmployeeLocation = () => {
+        EmployeeRepository.assignEmployee({
+            employeeId: empLocation.userId,
+            locationId: empLocation.locationId
+        })
     }
 
     const handleUserInput = (event) => {
-        const copy = {...employee}
+        const copy = { ...empLocation }
+        copy[event.target.id] = parseInt(event.target.value)
+        setEmpLocation(copy)
+    }
+
+    const handleUserLocation = (event) => {
+        const copy = { ...locations }
         copy[event.target.id] = event.target.value
-        updateEmployee(copy)
+        defineLocations(copy)
     }
 
 
@@ -38,17 +51,24 @@ export default (props) => {
                 <h2 className="employeeForm__title">New Employee</h2>
                 <div className="form-group">
                     <label htmlFor="employeeName">Employee name</label>
-                    <input onChange={handleUserInput}
-                        type="text"
-                        required
-                        autoFocus
+                    <select onChange={handleUserInput}
+                        id="userId"
+                        defaultValue=""
+                        name="employee"
                         className="form-control"
-                        placeholder="Employee name"
-                    />
+                    >
+                        <option value="0">Select an employee</option>
+                        {employees.map(e => (
+                            <option key={e.id} value={e.id}>
+                                {e.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="location">Assign to location</label>
                     <select onChange={handleUserInput}
+                        id="locationId"
                         defaultValue=""
                         name="location"
                         className="form-control"
@@ -65,7 +85,7 @@ export default (props) => {
                     onClick={
                         evt => {
                             evt.preventDefault()
-                            constructNewEmployee()
+                            constructNewEmployeeLocation()
                         }
                     }
                     className="btn btn-primary"> Save Employee </button>
