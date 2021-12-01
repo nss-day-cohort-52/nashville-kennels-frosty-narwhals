@@ -80,10 +80,12 @@ export default ({ employee, renderFunc }) => {
                 }
 
                 {
-                    <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
-                       fireEmployee(resource.id)
+                    getCurrentUser().employee
+                        ? <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
+                            fireEmployee(resource.id)
 
                     }}>Fire</button>
+                        : ""
                 }
 
             </section>
