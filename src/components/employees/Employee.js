@@ -48,6 +48,8 @@ export default ({ employee, renderFunc }) => {
     
     )
 
+   // useEffect(()=>  )
+
     return (
         <article className={classes}>
             <section className="card-body">
@@ -69,11 +71,15 @@ export default ({ employee, renderFunc }) => {
                 {
                     employeeId
                         ? <>
-                            <section>
-                                Caring for {location.animals.length} animals
+                          <section>
+                                Caring for {resource?.animals?.length} animals
                             </section>
                             <section>
-                                Working at {}location
+
+                                Working at {resource?.locations?.map((empLocations) => {
+                                    
+                                    return empLocations.location.name
+                                })} location
                             </section>
                         </>
                         : ""
