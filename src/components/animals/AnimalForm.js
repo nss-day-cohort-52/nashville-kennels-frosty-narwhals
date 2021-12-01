@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import "./AnimalForm.css"
 import AnimalRepository from "../../repositories/AnimalRepository";
 
@@ -10,6 +10,13 @@ export default (props) => {
     const [employees, setEmployees] = useState([])
     const [employeeId, setEmployeeId] = useState(0)
     const [saveEnabled, setEnabled] = useState(false)
+
+    useEffect(
+        () => {
+            AnimalRepository.getAll()
+                .then(())
+        }
+    )
 
     const constructNewAnimal = evt => {
         evt.preventDefault()
