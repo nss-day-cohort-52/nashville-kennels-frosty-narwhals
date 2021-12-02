@@ -6,6 +6,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
 import LocationRepository from "../../repositories/LocationRepository";
+import AnimalRepository from "../../repositories/AnimalRepository";
 
 
 export default ({ employee, renderFunc }) => {
@@ -36,18 +37,19 @@ export default ({ employee, renderFunc }) => {
             .then(
                 renderFunc()
             )
-
-
     }
+
     useEffect(() => {
         LocationRepository.getAll()
             .then(locationOBJ => markLocation(locationOBJ))
-
     }, []
-
     )
 
-    // useEffect(()=>  )
+    useEffect(() => {
+        AnimalRepository.getAll()
+            .then(setCount(animalCount.userId))
+    }, []
+    )
 
     return (
         <article className={classes}>
@@ -65,14 +67,13 @@ export default ({ employee, renderFunc }) => {
                                 {resource.name}
                             </Link>
                     }
-                </h5>      
-                <section>          
+                </h5>
+                <section>
+                    Caring for {setCount.length} animals
+                </section>
                 {
                     employeeId
                         ? <>
-                            <section>
-                                Caring for {resource?.animals?.length} animals
-                            </section>
                             <section>
 
                                 Working at {resource?.locations?.map((empLocations) => {
@@ -83,7 +84,7 @@ export default ({ employee, renderFunc }) => {
                         </>
                         : ""
                 }
-                </section>
+
 
 
 
