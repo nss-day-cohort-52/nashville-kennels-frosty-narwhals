@@ -5,7 +5,6 @@ import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
-import { request } from "../../repositories/Fetch";
 import LocationRepository from "../../repositories/LocationRepository";
 
 
@@ -30,25 +29,25 @@ export default ({ employee, renderFunc }) => {
             markLocation(resource.employeeLocations[0])
         }
     }, [resource])
-    
+
     const fireEmployee = (id) => {
-        
+
         EmployeeRepository.delete(id)
             .then(
                 renderFunc()
-                )
+            )
 
-        
+
     }
-    useEffect(()=>{
+    useEffect(() => {
         LocationRepository.getAll()
-        .then(locationOBJ => markLocation(locationOBJ))
-        
+            .then(locationOBJ => markLocation(locationOBJ))
+
     }, []
-    
+
     )
 
-   // useEffect(()=>  )
+    // useEffect(()=>  )
 
     return (
         <article className={classes}>
@@ -65,32 +64,35 @@ export default ({ employee, renderFunc }) => {
                                 }}>
                                 {resource.name}
                             </Link>
-
                     }
-                </h5>
+                </h5>      
+                <section>          
                 {
                     employeeId
                         ? <>
-                          <section>
+                            <section>
                                 Caring for {resource?.animals?.length} animals
                             </section>
                             <section>
 
                                 Working at {resource?.locations?.map((empLocations) => {
-                                    
+
                                     return empLocations.location.name
                                 })} location
                             </section>
                         </>
                         : ""
                 }
+                </section>
+
+
 
                 {
                     getCurrentUser().employee
                         ? <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
                             fireEmployee(resource.id)
 
-                    }}>Fire</button>
+                        }}>Fire</button>
                         : ""
                 }
 

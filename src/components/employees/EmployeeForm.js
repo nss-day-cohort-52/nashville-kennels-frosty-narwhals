@@ -27,7 +27,7 @@ export default (props) => {
 
     const constructNewEmployeeLocation = () => {
         EmployeeRepository.assignEmployee({
-            employeeId: empLocation.userId,
+            Id: empLocation.userId,
             locationId: empLocation.locationId
         })
     }
@@ -37,13 +37,6 @@ export default (props) => {
         copy[event.target.id] = parseInt(event.target.value)
         setEmpLocation(copy)
     }
-
-    const handleUserLocation = (event) => {
-        const copy = { ...locations }
-        copy[event.target.id] = event.target.value
-        defineLocations(copy)
-    }
-
 
     return (
         <>

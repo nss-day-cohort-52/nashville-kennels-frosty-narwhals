@@ -9,13 +9,13 @@ import "./Location.css"
 export default () => {
     const [animals, setAnimals] = useState([])
     const [employees, updateEmployees] = useState([])
-    const [location, set] = useState({animals:[], employeeLocations: []})
+    const [location, set] = useState({ animals: [], employeeLocations: [] })
 
     const { locationId } = useParams()
 
 
     useEffect(() => {
-       LocationRepository.get(locationId).then(set)
+        LocationRepository.get(locationId).then(set)
     }, [locationId])
 
     return (
