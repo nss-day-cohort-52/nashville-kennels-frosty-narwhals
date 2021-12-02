@@ -12,29 +12,29 @@ export default () => {
         () => {
             render()
         }, []
-        )
-        
+    )
+
     const render = () => {
-            EmployeeRepository.getAll()
+        EmployeeRepository.getAll()
             .then(
                 (em) => {
                     setEmployees(em)
                 }
             )
 
-  }
-    
+    }
+
     return (
         <>
             <div className="employees">
                 {
-                    emps.map(a => <Employee key={a.id} employee={a} renderFunc={render}/>)
+                    emps.map(a => <Employee key={a.id} employee={a} renderFunc={render}  /> ) 
                 }
             </div>
             <div>
-            <button className="btn--employeeLocale" onClick={() => {
+                <button className="btn--employeeLocale" onClick={() => {
                     history.push("/employees/create")
-                    }}>Set Employee Location</button>
+                }}>Set Employee Location</button>
             </div>
         </>
     )
