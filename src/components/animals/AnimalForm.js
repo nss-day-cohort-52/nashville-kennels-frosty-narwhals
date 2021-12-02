@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from "react"
 import "./AnimalForm.css"
 import AnimalRepository from "../../repositories/AnimalRepository";
-
+import EmployeeRepository from "../../repositories/EmployeeRepository";
+import { useHistory } from "react-router";
+import LocationRepository from "../../repositories/LocationRepository";
 
 export default (props) => {
     const [animalName, setName] = useState("")
@@ -10,32 +12,49 @@ export default (props) => {
     const [employees, setEmployees] = useState([])
     const [employeeId, setEmployeeId] = useState(0)
     const [saveEnabled, setEnabled] = useState(false)
+    const [empLocations, setEmployeeLocations] = useState([])
+    const history = useHistory()
 
+    
     useEffect(
         () => {
             AnimalRepository.getAll()
-                .then(())
-        }
+                .then((ani) => {
+                    setAnimals(ani)
+                })
+        }, []
     )
-
+    
+    useEffect(
+        () => {
+            EmployeeRepository.getAll()
+            .then(
+                (em) => {
+                    setEmployees(em)
+                }
+            ) 
+        }, []
+    )
     const constructNewAnimal = evt => {
         evt.preventDefault()
         const eId = parseInt(employeeId)
-
         if (eId === 0) {
             window.alert("Please select a caretaker")
         } else {
             const emp = employees.find(e => e.id === eId)
+            debugger
+            const employeeLocationArray = emp.employeeLocations
+            const empLoc = employeeLocationArray.find(emploc => emploc.userId === emp.id)
             const animal = {
                 name: animalName,
                 breed: breed,
                 employeeId: eId,
-                locationId: parseInt(emp.locationId)
+                locationId: empLoc.locationId
             }
 
             AnimalRepository.addAnimal(animal)
                 .then(() => setEnabled(true))
-                .then(() => props.history.push("/animals"))
+                .then(() => history.push("/animals"))
         }
     }
 
