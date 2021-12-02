@@ -14,11 +14,11 @@ export const Animal = ({ animal, syncAnimals,
     const [myOwners, setPeople] = useState([])
     const [allOwners, registerOwners] = useState([])
     const [classes, defineClasses] = useState("card animal")
+let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { animalId } = useParams()
     const { resolveResource, resource: currentAnimal } = useResourceResolver()
-    let selectedOwnerValue = 0
 
     useEffect(() => {
         setAuth(getCurrentUser().employee)
@@ -98,11 +98,13 @@ export const Animal = ({ animal, syncAnimals,
                             </span>
 
                             {
+                            
                                 myOwners.length < 2
                                     ? <select defaultValue=""
                                         name="owner"
                                         className="form-control small"
-                                        onChange={(event) => {selectedOwnerValue = parseInt(event.target.value)}} >
+                                        
+                                        onChange={(event) => {setSelectedOwnerValue(parseInt(event.target.value))}} >
                                         <option value="">
                                             Select {myOwners.length === 1 ? "another" : "an"} owner
                                         </option>
@@ -113,7 +115,7 @@ export const Animal = ({ animal, syncAnimals,
                                     : null
                             }
 {
-   <button className="btn btn-warning mt-3 form-control small" onClick={() => AnimalOwnerRepository.assignOwner(selectedOwnerValue) }>
+   <button className="btn btn-warning mt-3 form-control small" onClick={() => AnimalOwnerRepository.assignOwner(selectedOwnerValue) }> Submit Owner Change</button>
 }
 
                             {
