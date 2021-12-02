@@ -14,7 +14,7 @@ export const Animal = ({ animal, syncAnimals,
     const [myOwners, setPeople] = useState([])
     const [allOwners, registerOwners] = useState([])
     const [classes, defineClasses] = useState("card animal")
-let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
+    let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { animalId } = useParams()
@@ -53,7 +53,7 @@ let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
         }
     }, [animalId])
     
-
+    const ownerOBJ = allOwners?.owners?.find(ownerOBJ => ownerOBJ?.owners?.id === selectedOwnerValue)
   
     return (
         
@@ -94,7 +94,7 @@ let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
 
                             <h6>Owners</h6>
                             <span className="small">
-                                Owned by {}
+                                    Owned by {ownerOBJ}
                             </span>
 
                             {
@@ -115,7 +115,7 @@ let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
                                     : null
                             }
 {
-   <button className="btn btn-warning mt-3 form-control small" onClick={() => AnimalOwnerRepository.assignOwner(selectedOwnerValue) }> Submit Owner Change</button>
+   <button className="btn btn-warning mt-3 form-control small" onClick={() => AnimalOwnerRepository.assignOwner(currentAnimal.id,selectedOwnerValue) }> Submit Owner Change</button>
 }
 
                             {
