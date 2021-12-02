@@ -94,7 +94,7 @@ let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
 
                             <h6>Owners</h6>
                             <span className="small">
-                                Owned by unknown
+                                Owned by {}
                             </span>
 
                             {
