@@ -42,7 +42,7 @@ export default (props) => {
             window.alert("Please select a caretaker")
         } else {
             const emp = employees.find(e => e.id === eId)
-            debugger
+            
             const employeeLocationArray = emp.employeeLocations
             const empLoc = employeeLocationArray.find(emploc => emploc.userId === emp.id)
             const animal = {
