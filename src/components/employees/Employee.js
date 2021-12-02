@@ -5,12 +5,12 @@ import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
-import { request } from "../../repositories/Fetch";
 import LocationRepository from "../../repositories/LocationRepository";
+import AnimalRepository from "../../repositories/AnimalRepository";
 
 
 export default ({ employee, renderFunc }) => {
-    const [animalCount, setCount] = useState(0)
+    const [animalCount, setCount] = useState([])
     const [location, markLocation] = useState({ name: "" })
     const [classes, defineClasses] = useState("card employee")
     const { employeeId } = useParams()
@@ -30,25 +30,25 @@ export default ({ employee, renderFunc }) => {
             markLocation(resource.employeeLocations[0])
         }
     }, [resource])
-    
+
     const fireEmployee = (id) => {
-        
+
         EmployeeRepository.delete(id)
             .then(
                 renderFunc()
-                )
-
-        
+            )
     }
-    useEffect(()=>{
+
+    useEffect(() => {
         LocationRepository.getAll()
-        .then(locationOBJ => markLocation(locationOBJ))
-        
+            .then(locationOBJ => markLocation(locationOBJ))
     }, []
-    
     )
 
-   // useEffect(()=>  )
+    useEffect(() => {
+        AnimalRepository.getAll()
+    }, []
+    )
 
     return (
         <article className={classes}>
@@ -65,19 +65,18 @@ export default ({ employee, renderFunc }) => {
                                 }}>
                                 {resource.name}
                             </Link>
-
                     }
                 </h5>
+                <section>
+                    Caring for {resource?.animalCaretakers?.length??resource?.animals?.length} animals
+                </section>
                 {
                     employeeId
                         ? <>
-                          <section>
-                                Caring for {resource?.animals?.length} animals
-                            </section>
                             <section>
 
                                 Working at {resource?.locations?.map((empLocations) => {
-                                    
+
                                     return empLocations.location.name
                                 })} location
                             </section>
@@ -85,12 +84,15 @@ export default ({ employee, renderFunc }) => {
                         : ""
                 }
 
+
+
+
                 {
                     getCurrentUser().employee
                         ? <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
                             fireEmployee(resource.id)
 
-                    }}>Fire</button>
+                        }}>Fire</button>
                         : ""
                 }
 

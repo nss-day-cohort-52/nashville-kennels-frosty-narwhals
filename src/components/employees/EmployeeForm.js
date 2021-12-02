@@ -38,13 +38,6 @@ export default (props) => {
         setEmpLocation(copy)
     }
 
-    const handleUserLocation = (event) => {
-        const copy = { ...locations }
-        copy[event.target.id] = event.target.value
-        defineLocations(copy)
-    }
-
-
     return (
         <>
             <form className="employeeForm">
