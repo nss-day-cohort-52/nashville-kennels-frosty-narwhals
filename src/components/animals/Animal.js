@@ -103,7 +103,7 @@ export const Animal = ({ animal, syncAnimals,
                                             Select {myOwners.length === 1 ? "another" : "an"} owner
                                         </option>
                                         {
-                                            allOwners.map(o => <option key={o.id} value={o.id}>{o.name}</option>)
+                                            allOwners.map(ownersOBJ => <option key={ownersOBJ.id} value={ownersOBJ.id}>{ownersOBJ.name}</option>)
                                         }
                                     </select>
                                     : null
