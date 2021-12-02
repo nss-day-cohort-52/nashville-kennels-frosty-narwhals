@@ -10,7 +10,7 @@ import AnimalRepository from "../../repositories/AnimalRepository";
 
 
 export default ({ employee, renderFunc }) => {
-    const [animalCount, setCount] = useState(0)
+    const [animalCount, setCount] = useState([])
     const [location, markLocation] = useState({ name: "" })
     const [classes, defineClasses] = useState("card employee")
     const { employeeId } = useParams()
@@ -47,7 +47,6 @@ export default ({ employee, renderFunc }) => {
 
     useEffect(() => {
         AnimalRepository.getAll()
-            .then(setCount(animalCount.userId))
     }, []
     )
 
@@ -69,7 +68,7 @@ export default ({ employee, renderFunc }) => {
                     }
                 </h5>
                 <section>
-                    Caring for {setCount.length} animals
+                    Caring for {resource?.animalCaretakers?.length??resource?.animals?.length} animals
                 </section>
                 {
                     employeeId

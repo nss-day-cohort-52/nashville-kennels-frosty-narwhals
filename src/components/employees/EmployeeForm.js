@@ -27,7 +27,7 @@ export default (props) => {
 
     const constructNewEmployeeLocation = () => {
         EmployeeRepository.assignEmployee({
-            Id: empLocation.userId,
+            userId: empLocation.userId,
             locationId: empLocation.locationId
         })
     }
