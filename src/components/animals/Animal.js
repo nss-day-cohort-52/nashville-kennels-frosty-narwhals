@@ -19,7 +19,7 @@ export const Animal = ({ animal, syncAnimals,
     const history = useHistory()
     const { animalId } = useParams()
     const { resolveResource, resource: currentAnimal } = useResourceResolver()
-
+    
     useEffect(() => {
         setAuth(getCurrentUser().employee)
         resolveResource(animal, animalId, AnimalRepository.get)
@@ -53,7 +53,7 @@ export const Animal = ({ animal, syncAnimals,
         }
     }, [animalId])
     
-    const ownerOBJ = allOwners?.owners?.find(ownerOBJ => ownerOBJ?.owners?.id === selectedOwnerValue)
+    const ownerOBJ = allOwners?.owners?.find(owner=> owner?.owners?.id === selectedOwnerValue)
   
     return (
         
@@ -94,12 +94,12 @@ export const Animal = ({ animal, syncAnimals,
 
                             <h6>Owners</h6>
                             <span className="small">
-                                    Owned by {ownerOBJ}
+                                    Owned by {animal.animalOwners.map(relavantOwner => relavantOwner.user.name )}
                             </span>
 
                             {
                             
-                                myOwners.length < 2
+                                myOwners.length < 200
                                     ? <select defaultValue=""
                                         name="owner"
                                         className="form-control small"
