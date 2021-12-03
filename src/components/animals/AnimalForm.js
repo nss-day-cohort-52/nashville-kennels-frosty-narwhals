@@ -48,7 +48,6 @@ export default (props) => {
             const animal = {
                 name: animalName,
                 breed: breed,
-                employeeId: eId,
                 locationId: empLoc.locationId
             }
 

@@ -145,12 +145,12 @@ export const Animal = ({
                                 ? <button className="btn btn-warning mt-3 form-control small" onClick={() =>
                                     AnimalOwnerRepository
                                         .removeOwnersAndCaretakers(currentAnimal.id)
-                                        .then(() => {}) // Remove animal
-                                        .then(() => {}) // Get all animals
-                                }>Discharge</button>
-                                : ""
-                        }
-
+                                        .then(() => {AnimalRepository.delete(currentAnimal.id)}) // Remove animal
+                                        .then(() => {syncAnimals()}) // Get all animals
+                                        .then(() => history.push("/animals"))
+                                    }>Discharge</button>
+                                    : ""
+                                }
                     </details>
                 </div>
             </li>
