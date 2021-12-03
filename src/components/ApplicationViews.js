@@ -3,6 +3,7 @@ import { Route } from "react-router-dom"
 
 import AnimalRoutes from "./AnimalRoutes"
 import EmployeeRoutes from "./EmployeeRoutes"
+import EmployeeList from "./employees/EmployeeList"
 import LocationRoutes from "./LocationRoutes"
 import SearchResults from "./search/SearchResults"
 

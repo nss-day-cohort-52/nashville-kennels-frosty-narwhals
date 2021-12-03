@@ -18,11 +18,12 @@ export const Animal = ({
     const [myOwners, setPeople] = useState([])
     const [allOwners, registerOwners] = useState([])
     const [classes, defineClasses] = useState("card animal")
+    let [selectedOwnerValue, setSelectedOwnerValue] = useState(0)
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { animalId } = useParams()
     const { resolveResource, resource: currentAnimal } = useResourceResolver()
-
+    
     useEffect(() => {
         setAuth(getCurrentUser().employee)
         resolveResource(animal, animalId, AnimalRepository.get)
@@ -56,12 +57,16 @@ export const Animal = ({
         }
     }, [animalId])
 
-
-
-
-   
-
+  /*  useEffect(() => {
+        renderOwnerNames =>
+    },[]
+    )*/
+    // After animal owner posts on the onclick, we need to use syncAnimals to trigger a rerender after the post has been completed.
+    
+    const ownerOBJ = allOwners?.owners?.find(owner=> owner?.owners?.id === selectedOwnerValue)
+  
     return (
+        
         <>
             <li className={classes}>
                 <div className="card-body">
@@ -100,25 +105,29 @@ export const Animal = ({
 
                             <h6>Owners</h6>
                             <span className="small">
-                                Owned by unknown
+                                    Owned by {animal.animalOwners.map(relavantOwner => relavantOwner.user.name )}
                             </span>
 
                             {
-                                myOwners.length < 2
+                            
+                                myOwners.length < 200
                                     ? <select defaultValue=""
                                         name="owner"
                                         className="form-control small"
-                                        onChange={() => {}} >
+                                        
+                                        onChange={(event) => {setSelectedOwnerValue(parseInt(event.target.value))}} >
                                         <option value="">
                                             Select {myOwners.length === 1 ? "another" : "an"} owner
                                         </option>
                                         {
-                                            allOwners.map(o => <option key={o.id} value={o.id}>{o.name}</option>)
+                                            allOwners.map(ownersOBJ => <option key={ownersOBJ.id} value={ownersOBJ.id}>{ownersOBJ.name}</option>)
                                         }
                                     </select>
                                     : null
                             }
-
+{
+   <button className="btn btn-warning mt-3 form-control small" onClick={() => AnimalOwnerRepository.assignOwner(currentAnimal.id,selectedOwnerValue).then(syncAnimals()) }> Submit Owner Change</button>
+}
 
                             {
                                 detailsOpen && "treatments" in currentAnimal
