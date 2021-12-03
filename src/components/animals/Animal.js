@@ -52,6 +52,12 @@ export const Animal = ({ animal, syncAnimals,
                 })
         }
     }, [animalId])
+
+  /*  useEffect(() => {
+        renderOwnerNames =>
+    },[]
+    )*/
+    // After animal owner posts on the onclick, we need to use syncAnimals to trigger a rerender after the post has been completed.
     
     const ownerOBJ = allOwners?.owners?.find(owner=> owner?.owners?.id === selectedOwnerValue)
   
@@ -115,7 +121,7 @@ export const Animal = ({ animal, syncAnimals,
                                     : null
                             }
 {
-   <button className="btn btn-warning mt-3 form-control small" onClick={() => AnimalOwnerRepository.assignOwner(currentAnimal.id,selectedOwnerValue) }> Submit Owner Change</button>
+   <button className="btn btn-warning mt-3 form-control small" onClick={() => AnimalOwnerRepository.assignOwner(currentAnimal.id,selectedOwnerValue).then(syncAnimals()) }> Submit Owner Change</button>
 }
 
                             {
