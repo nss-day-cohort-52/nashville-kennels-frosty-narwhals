@@ -68,7 +68,7 @@ export default ({ employee, renderFunc }) => {
                     }
                 </h5>
                 <section>
-                    Caring for {resource?.animalCaretakers?.length??resource?.animals?.length} animals
+                    Caring for {resource?.animalCaretakers?.length ?? resource?.animals?.length} animals
                 </section>
                 {
                     employeeId
@@ -81,23 +81,14 @@ export default ({ employee, renderFunc }) => {
                                 })} location
                             </section>
                         </>
-                        : ""
+                        :
+                        getCurrentUser().employee
+                            ? <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
+                                fireEmployee(resource.id)
+                            }}>Fire</button>
+                            : ""
                 }
-
-
-
-
-                {
-                    getCurrentUser().employee
-                        ? <button className="btn--fireEmployee" id={resource.id} onClick={(event) => {
-                            fireEmployee(resource.id)
-
-                        }}>Fire</button>
-                        : ""
-                }
-
             </section>
-
         </article>
     )
 }
